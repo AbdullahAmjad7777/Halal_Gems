@@ -11,5 +11,6 @@ export type Restaurant = {
   phone?: string;
   website?: string;
   hours?: string;
+  imageUrl?: string;
 };
 

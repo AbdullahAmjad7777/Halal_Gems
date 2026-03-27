@@ -21,6 +21,32 @@ function halalBadge(statusRaw: string): { label: string; variant: 'verified' | '
   return { label: statusRaw, variant: 'unknown' };
 }
 
+function restaurantImage(restaurant: Restaurant): string {
+  const cuisine = restaurant.cuisine.toLowerCase();
+
+  if (cuisine.includes('turkish') || cuisine.includes('ottoman')) {
+    return 'https://images.pexels.com/photos/7245465/pexels-photo-7245465.jpeg?auto=compress&cs=tinysrgb&w=800';
+  }
+  if (cuisine.includes('arab') || cuisine.includes('levant')) {
+    return 'https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=800';
+  }
+  if (cuisine.includes('indian') || cuisine.includes('pakistan')) {
+    return 'https://images.pexels.com/photos/1117862/pexels-photo-1117862.jpeg?auto=compress&cs=tinysrgb&w=800';
+  }
+  if (cuisine.includes('bangladesh') || cuisine.includes('bengali')) {
+    return 'https://images.pexels.com/photos/2087748/pexels-photo-2087748.jpeg?auto=compress&cs=tinysrgb&w=800';
+  }
+  if (cuisine.includes('syrian') || cuisine.includes('middle')) {
+    return 'https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=800';
+  }
+
+  // generic nice plate fallback
+  return (
+    restaurant.imageUrl ??
+    'https://images.pexels.com/photos/1640771/pexels-photo-1640771.jpeg?auto=compress&cs=tinysrgb&w=800'
+  );
+}
+
 export function RestaurantCard({ restaurant, distanceKm, onClose }: Props) {
   if (!restaurant) {
     return (
@@ -44,6 +70,7 @@ export function RestaurantCard({ restaurant, distanceKm, onClose }: Props) {
   }
 
   const badge = halalBadge(String(restaurant.halal_status ?? ''));
+  const imageSrc = restaurantImage(restaurant);
 
   return (
     <div className="sidebar-card card">
@@ -62,6 +89,14 @@ export function RestaurantCard({ restaurant, distanceKm, onClose }: Props) {
       <div className="card-header">
         <h2 className="card-title">{restaurant.name}</h2>
         <span className={`badge badge-${badge.variant}`}>{badge.label}</span>
+      </div>
+      <div className="card-image-wrap">
+        <img
+          src={imageSrc}
+          alt={restaurant.name}
+          className="card-image"
+          loading="lazy"
+        />
       </div>
       <p className="muted">
         {restaurant.address}

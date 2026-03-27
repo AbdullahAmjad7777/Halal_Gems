@@ -147,7 +147,10 @@ function App() {
             <RestaurantCard
               restaurant={selected}
               distanceKm={selected ? selectedDistanceKm : null}
-              onClose={() => setIsMobileDetailsOpen(false)}
+              onClose={() => {
+                setIsMobileDetailsOpen(false);
+                setSelected(null);
+              }}
             />
           </div>
         </section>
